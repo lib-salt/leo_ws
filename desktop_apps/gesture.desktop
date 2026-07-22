@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Leo Gesture
+Exec='@@REPO_PATH@@/shell_scripts/desktop_part/leo_gesture.sh'
+Icon=@@REPO_PATH@@/icons/favicon.ico
+Terminal=False

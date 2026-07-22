@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Leo Lidar
+Exec='@@REPO_PATH@@/shell_scripts/desktop_part/leo_lidar.sh'
+Icon=@@REPO_PATH@@/icons/favicon.ico
+Terminal=False

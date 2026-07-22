@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Leo Depth Camera
+Exec='@@REPO_PATH@@/shell_scripts/desktop_part/leo_realsense.sh'
+Icon=@@REPO_PATH@@/icons/favicon.ico
+Terminal=False

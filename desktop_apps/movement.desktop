@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Leo Movement
+Exec='@@REPO_PATH@@/shell_scripts/desktop_part/leo_movement.sh'
+Icon=@@REPO_PATH@@/icons/favicon.ico
+Terminal=False
