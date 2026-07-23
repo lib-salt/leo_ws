@@ -5,7 +5,6 @@ import mediapipe as mp
 import rclpy
 
 from rclpy.node import Node
-# from sensor_msgs.msg import Image
 from sensor_msgs.msg import CompressedImage
 import numpy as np
 
@@ -96,8 +95,6 @@ class GestureRecognitionNode(Node):
     def __init__(self):
         super().__init__("gesture_recognition")
 
-        # self.bridge = CvBridge()
-
         options = GestureRecognizerOptions(
             base_options=BaseOptions(model_asset_path=MODEL_PATH),
             running_mode=VisionRunningMode.VIDEO,
@@ -107,7 +104,6 @@ class GestureRecognitionNode(Node):
         self.recognizer = GestureRecognizer.create_from_options(options)
 
         self.subscription = self.create_subscription(
-            # Image, "/camera/image_raw", self.image_callback, qos.qos_profile_sensor_data
             CompressedImage, "/camera/image_color/compressed", self.image_callback, qos.qos_profile_sensor_data
         )
 
@@ -136,33 +132,20 @@ class GestureRecognitionNode(Node):
 
         frame = draw_result(frame, result)
 
-        cv2.imshow("Gesture Recognition", frame)
+        window_name = "Gesture Recognition"
 
+        cv2.imshow(window_name, frame)
         cv2.waitKey(1)
 
-    # def ros_image_to_cv2(self, msg):
-    #     if msg.encoding == "bgr8":
-    #         return np.frombuffer(
-    #             msg.data,
-    #             dtype=np.uint8
-    #         ).reshape(msg.height, msg.width, 3)
-
-    #     elif msg.encoding == "rgb8":
-    #         frame = np.frombuffer(
-    #             msg.data,
-    #             dtype=np.uint8
-    #         ).reshape(msg.height, msg.width, 3)
-
-    #         return cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-
-    #     else:
-    #         raise ValueError(f"Unsupported encoding: {msg.encoding}")
+        if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
+            self.get_logger().info("Window closed by user. Shutting down node.")
+            self.destroy_node()
+            rclpy.shutdown()
 
     def destroy_node(self):
         self.recognizer.close()
         cv2.destroyAllWindows()
         super().destroy_node()
-
 
 def main(args=None):
     rclpy.init(args=args)
