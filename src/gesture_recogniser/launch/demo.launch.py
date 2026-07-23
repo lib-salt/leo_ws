@@ -15,6 +15,13 @@ config_file = os.path.join(
 
 def generate_launch_description():
 
+    joy_node = Node(
+        package='joy',
+        executable='joy_node',
+        name='joy_node',
+        output='screen'
+    )
+
     joy_arg = DeclareLaunchArgument(
         'joy',
         default_value='true',
@@ -36,4 +43,4 @@ def generate_launch_description():
         output='screen'
     )
 
-    return LaunchDescription([joy_arg, teleop_node, gesture_node])
+    return LaunchDescription([joy_node,joy_arg, teleop_node, gesture_node])
