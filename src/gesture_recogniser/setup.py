@@ -15,6 +15,8 @@ setup(
          glob.glob('launch/*.launch.py')),
         ('share/' + package_name + '/models',
          glob.glob('gesture_recogniser/models/*.task')),
+         ('share/' + package_name + '/configs',
+         glob.glob('configs/*.yaml')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
