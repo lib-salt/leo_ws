@@ -7,4 +7,4 @@ sudo apt install ros-${ROS_DISTRO}-realsense2-description -y
 sudo apt install ros-${ROS_DISTRO}-rqt-image-view -y
 sudo apt install ros-${ROS_DISTRO}-compressed-image-transport -y
 
-pip install --break-system-packages mediapipe opencv-python numpy
+pip install --break-system-packages mediapipe opencv-python numpy==2.4.4
