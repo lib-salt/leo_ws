@@ -1,0 +1,44 @@
+/**:
+  ros__parameters:
+
+    default_joint_step: 0.08
+    step_increment: 0.01
+    min_joint_step: 0.005
+    max_joint_step: 0.10
+
+    joints.waist.positive.type: "axis"
+    joints.waist.positive.index: 6
+    joints.waist.positive.threshold: 0.5
+
+    joints.waist.negative.type: "axis"
+    joints.waist.negative.index: 6
+    joints.waist.negative.threshold: -0.5
+
+    joints.shoulder.positive.type: "button"
+    joints.shoulder.positive.index: 4
+
+    joints.shoulder.negative.type: "axis"
+    joints.shoulder.negative.index: 2
+    joints.shoulder.negative.threshold: -0.5
+
+    joints.elbow.positive.type: "button"
+    joints.elbow.positive.index: 5
+
+    joints.elbow.negative.type: "axis"
+    joints.elbow.negative.index: 5
+    joints.elbow.negative.threshold: -0.5
+
+    joints.wrist_angle.positive.type: "button"
+    joints.wrist_angle.positive.index: 3
+
+    joints.wrist_angle.negative.type: "button"
+    joints.wrist_angle.negative.index: 0
+
+    gripper.open.index: 2
+    gripper.close.index: 1
+
+    step_control.increase.index: 7
+    step_control.increase.threshold: 0.5
+
+    step_control.decrease.index: 7
+    step_control.decrease.threshold: -0.5

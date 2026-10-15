@@ -1,0 +1,89 @@
+pip install modern_robotics
+update transforms3d or install with pip
+
+give the workspace the necessary permissions e.g.
+
+what is in bash file for leo rover arm setup:
+--2026-07-27 13:42:21--  http://files.fictionlab.pl/utilities/install_interbotix_packages.sh
+Resolving files.fictionlab.pl (files.fictionlab.pl)... 91.236.131.73
+Connecting to files.fictionlab.pl (files.fictionlab.pl)|91.236.131.73|:80... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://files.fictionlab.pl/utilities/install_interbotix_packages.sh [following]
+--2026-07-27 13:42:21--  https://files.fictionlab.pl/utilities/install_interbotix_packages.sh
+Connecting to files.fictionlab.pl (files.fictionlab.pl)|91.236.131.73|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2128 (2.1K) [application/x-sh]
+Saving to: ‘STDOUT’
+
+-                                         0%[                                                                                ]       0  --.-KB/s               #!/bin/bash -e
+
+get_ws_path() {
+    # Ask the user for the ros workspace path
+    read -p "Input absolute path to the ROS workspace, you want to install the packages into:" ws_path
+    echo Your workspace: $ws_path
+}
+
+install_essentials() {
+    echo -e "Installing pip3.\n"
+    sudo apt -y install python3-pip
+    
+    echo -e "installing modern_robotics package"
+    pip3 install modern_robotics
+}
+
+install_interbotix_packages() {
+    source $ws_path/devel/setup.bash || true
+    cd $ws_path/src
+    echo -e "Cloning repositories. \n"
+    git clone https://github.com/Interbotix/interbotix_ros_core.git -b noetic
+    git clone https://github.com/Interbotix/interbotix_ros_manipulators.git -b noetic
+    git clone https://github.com/Interbotix/interbotix_ros_toolboxes.git -b noetic
+    
+    echo -e "Removing CATKIN_IGNORE files. \n"
+    rm interbotix_ros_core/interbotix_ros_xseries/CATKIN_IGNORE
+    rm interbotix_ros_manipulators/interbotix_ros_xsarms/CATKIN_IGNORE
+    rm interbotix_ros_toolboxes/interbotix_xs_toolbox/CATKIN_IGNORE
+    rm interbotix_ros_toolboxes/interbotix_common_toolbox/interbotix_moveit_interface/CATKIN_IGNORE
+
+    echo -e "Adding UDEV rules for robotic ARM. \n"
+    cd interbotix_ros_core/interbotix_ros_xseries/interbotix_xs_sdk
+    sudo cp 99-interbotix-udev.rules /etc/udev/rules.d/
+    sudo udevadm control --reload-rules && sudo udevadm trigger
+
+    echo -e "Installing ROS dependencies. \n"
+    cd $ws_path
+    rosdep update
+    rosdep install --from-paths src -iry
+
+    echo -e "Building and sourcing the workspace. \n"
+    catkin build -j 2
+    source devel/setup.bash
+}
+
+
+################################## MAIN
+get_ws_path
+
+# Ask user for confirmation of the path
+read -p "Is the path correct? [Y/n]" -n 1 -r 
+
+REPLY=${REPLY,,} #lowercase answer
+
+if [[ "$REPLY" =~ ^(no|n)$ ]]
+then
+    echo
+    get_ws_path
+else
+    echo -e "Processing installation."
+fi
+
+#################### 1) installing essential packages
+install_essentials
+
+#################### 2) installing ros packages
+install_interbotix_packages
+
+echo -e "Succesfully installed interbotix ROS packages and required dependencies."
+-                                       100%[===============================================================================>]   2.08K  --.-KB/s    in 0s      
+
+2026-07-27 13:42:21 (10.4 MB/s) - written to stdout [2128/2128]

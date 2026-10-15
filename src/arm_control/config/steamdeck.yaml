@@ -1,0 +1,50 @@
+/**:
+  ros__parameters:
+
+    default_joint_step: 0.08
+    step_increment: 0.01
+    min_joint_step: 0.005
+    max_joint_step: 0.10
+
+    # D-Pad Right / Left
+    joints.waist.positive.type: "button"
+    joints.waist.positive.index: 14
+    joints.waist.positive.threshold: 0.5
+
+    joints.waist.negative.type: "button"
+    joints.waist.negative.index: 13
+    joints.waist.negative.threshold: -0.5
+
+    # LB / LT
+    joints.shoulder.positive.type: "button"
+    joints.shoulder.positive.index: 9
+
+    joints.shoulder.negative.type: "axis"
+    joints.shoulder.negative.index: 4
+    joints.shoulder.negative.threshold: 0.5
+
+    # RB / RT
+    joints.elbow.positive.type: "button"
+    joints.elbow.positive.index: 10
+
+    joints.elbow.negative.type: "axis"
+    joints.elbow.negative.index: 5
+    joints.elbow.negative.threshold: 0.5
+
+    # Y / A
+    joints.wrist_angle.positive.type: "button"
+    joints.wrist_angle.positive.index: 3
+
+    joints.wrist_angle.negative.type: "button"
+    joints.wrist_angle.negative.index: 0
+
+    # X / B
+    gripper.open.index: 2
+    gripper.close.index: 1
+
+    # D-Pad Up / Down
+    step_control.increase.index: 11
+    step_control.increase.threshold: 1.0
+
+    step_control.decrease.index: 12
+    step_control.decrease.threshold: 1.0
